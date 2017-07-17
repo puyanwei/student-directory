@@ -1,5 +1,5 @@
 
-# List of all the students in array
+# List of all the students in hash table
 students = [
   {name: "Dr. Hannibal Lecter", cohort: :november},
   {name: "Darth Vader", cohort: :november},
@@ -19,7 +19,7 @@ def print_header
   puts "-------------"
 end
 
-# Printing students in the array
+# Printing students in the hash
 def print(students)
   students.each do |student|
     puts "#{student[:name]} (#{student[:cohort]} cohort)"
@@ -29,7 +29,6 @@ end
 def print_footer(names)
   puts "Overall, we have #{names.count} great students"
 end
-
 
 # Calling methods
 print_header
