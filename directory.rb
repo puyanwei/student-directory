@@ -1,37 +1,37 @@
 
 def print_header
-  puts "The students of Villains Academy"
-  puts "-------------"
+  puts "The students of Villains Academy".center(60)
+  puts "-------------".center(60)
 end
 
 def print(students)
   i = 0
   while i < students.length
-    puts "#{i + 1}. #{students[i][:name]}"
-    puts "Born: #{students[i][:birthplace]}, Height: #{students[i][:height]}, Hobby: #{students[i][:hobby]} -  #{students[i][:cohort]} Cohort"
+    puts "#{i + 1}. #{students[i][:name]}".center(60)
+    puts "Born: #{students[i][:birthplace]}, Height: #{students[i][:height]}, Hobby: #{students[i][:hobby]} -  #{students[i][:cohort]} Cohort".center(60)
     i += 1
   end
 end
 
 def print_footer(names)
-  puts "Overall, we have #{names.count} great students"
+  puts "Overall, we have #{names.count} great students".center(60)
 end
 
 def input_students
   students = []
-  puts "Please enter the names of the students."
-  puts "To finish, input no name."
+  puts "Please enter the names of the students.".center(60)
+  puts "To finish, input no name.".center(60)
   name = gets.chomp.capitalize
 
   while !name.empty? do
-    puts "Hobby?"
+    puts "Hobby?".center(60)
     hobby = gets.chomp.capitalize
-    puts "Birthplace?"
+    puts "Birthplace?".center(60)
     birthplace = gets.chomp.capitalize
-    puts "Height?"
+    puts "Height?".center(60)
     height = gets.chomp.capitalize
     students << {name: name, hobby: hobby, birthplace: birthplace, height: height, cohort: :November}
-    puts "Now we have #{students.count} students. Please input another."
+    puts "Now we have #{students.count} students. Please input another.".center(60)
     name = gets.chomp.capitalize
   end
   students
