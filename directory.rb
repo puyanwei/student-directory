@@ -7,7 +7,8 @@ end
 def print(students)
   i = 0
   while i < students.length
-    puts "#{i + 1}. #{students[i][:name]} (#{students[i][:cohort]}) cohort"
+    puts "#{i + 1}. #{students[i][:name]}"
+    puts "Born: #{students[i][:birthplace]}, Height: #{students[i][:height]}, Hobby: #{students[i][:hobby]} -  #{students[i][:cohort]} Cohort"
     i += 1
   end
 end
@@ -17,13 +18,20 @@ def print_footer(names)
 end
 
 def input_students
-  puts "Please enter the names of the students"
-  puts "To finish, just hit return twice"
-  name = gets.chomp.capitalize
   students = []
+  puts "Please enter the names of the students."
+  puts "To finish, input no name."
+  name = gets.chomp.capitalize
+
   while !name.empty? do
-    students << {name: name, cohort: :november}
-    puts "Now we have #{students.count} students"
+    puts "Hobby?"
+    hobby = gets.chomp.capitalize
+    puts "Birthplace?"
+    birthplace = gets.chomp.capitalize
+    puts "Height?"
+    height = gets.chomp.capitalize
+    students << {name: name, hobby: hobby, birthplace: birthplace, height: height, cohort: :November}
+    puts "Now we have #{students.count} students. Please input another."
     name = gets.chomp.capitalize
   end
   students
@@ -33,18 +41,3 @@ students = input_students
 print_header
 print(students)
 print_footer(students)
-
-=begin For testing
-students = [
-{name: "Dr. Hannibal Lecter", cohort: :november},
-{name: "Darth Vader", cohort: :november},
-{name: "Nurse Ratched", cohort: :november},
-{name: "Michael Corleone", cohort: :november},
-{name: "Alex DeLarge", cohort: :november},
-{name: "The Wicked Witch of the West", cohort: :november},
-{name: "Terminator", cohort: :november},
-{name: "Freddy Krueger", cohort: :november},
-{name: "The Joker", cohort: :november},
-{name: "Joffrey Baratheon", cohort: :november},
-{name: "Norman Bates", cohort: :november}]
-=end
