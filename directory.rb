@@ -6,11 +6,7 @@ def print_header
 end
 
 def print(students)
-  i = 0
-  while i < students.length
-    puts "#{i + 1}. #{students[i][:name]} Born: #{students[i][:birthplace]}, Height: #{students[i][:height]}, Hobby: #{students[i][:hobby]} #{students[i][:cohort]} cohort".center(60)
-    i += 1
-  end
+  students.sort_by {|x| x[:cohort]}.select {|x| puts "#{x[:cohort]} - #{x[:name]}"}
 end
 
 def print_footer(names)
@@ -22,8 +18,9 @@ def input_students
   students = []
   puts "Please enter the name of the student".center(60)
   puts "To finish, input no name.".center(60)
-  name = gets.capitalize
+  name = gets.chomp.capitalize
 
+  while !name.empty? do
   puts "Month of cohort. Default is November if blank".center(60)
   loop do
     cohort = gets.chomp.capitalize
@@ -38,7 +35,6 @@ def input_students
     puts "Invalid month. Try again.".center(60)
   end
 
-  while !name.empty? do
     puts "Hobby?".center(60)
     hobby = gets.chomp.capitalize
     puts "Birthplace?".center(60)
