@@ -1,3 +1,5 @@
+
+
 def print_header
   puts "The students of Villains Academy".center(60)
   puts "-------------".center(60)
@@ -16,13 +18,25 @@ def print_footer(names)
 end
 
 def input_students
+  month = %w(January February March April May June July August September October November December)
   students = []
   puts "Please enter the name of the student".center(60)
   puts "To finish, input no name.".center(60)
   name = gets.capitalize
+
   puts "Month of cohort. Default is November if blank".center(60)
-  cohort = gets.chomp.capitalize.to_sym
-  cohort.empty? ? cohort = :November : cohort
+  loop do
+    cohort = gets.chomp.capitalize
+    if cohort.empty?
+      cohort = :November
+      break
+    end
+    if month.include?(cohort)
+      cohort = cohort.to_sym
+      break
+    end
+    puts "Invalid month. Try again.".center(60)
+  end
 
   while !name.empty? do
     puts "Hobby?".center(60)
