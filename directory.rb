@@ -17,12 +17,12 @@ def input_students
   students = []
   puts "Please enter the name of the student".center(60)
   puts "To finish, input no name.".center(60)
-  name = gets.chomp.capitalize
+  name = gets.gsub(/\n/,"").capitalize
 
   while !name.empty? do
   puts "Month of cohort. Default is November if blank".center(60)
   loop do
-    cohort = gets.chomp.capitalize
+    cohort = gets.gsub(/\n/,"").capitalize
     if cohort.empty?
       @cohort = :November
       break
@@ -35,15 +35,15 @@ def input_students
   end
 
     puts "Hobby?".center(60)
-    hobby = gets.chomp.capitalize
+    hobby = gets.gsub(/\n/,"").capitalize
     puts "Birthplace?".center(60)
-    birthplace = gets.chomp.capitalize
+    birthplace = gets.gsub(/\n/,"").capitalize
     puts "Height?".center(60)
-    height = gets.chomp.capitalize
+    height = gets.gsub(/\n/,"").capitalize
     students << {name: name, hobby: hobby, birthplace: birthplace, height: height, cohort: @cohort}
     @n = students.count
     puts "Now we have #{@n} #{plural @n}. Please input another.".center(60)
-    name = gets.chomp.capitalize
+    name = gets.gsub(/\n/,"").capitalize
   end
   students
 end
