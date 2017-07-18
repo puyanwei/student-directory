@@ -8,7 +8,7 @@ def print(students)
   i = 0
   while i < students.length
     puts "#{i + 1}. #{students[i][:name]}".center(60)
-    puts "Born: #{students[i][:birthplace]}, Height: #{students[i][:height]}, Hobby: #{students[i][:hobby]} -  #{students[i][:cohort]} Cohort".center(60)
+    puts "Born: #{students[i][:birthplace]}, Height: #{students[i][:height]}, Hobby: #{students[i][:hobby]} -  #{students[i][:cohort]}Cohort".center(60)
     i += 1
   end
 end
@@ -19,9 +19,13 @@ end
 
 def input_students
   students = []
-  puts "Please enter the names of the students.".center(60)
+  puts "Please enter the name of the student and cohort month.".center(60)
+  puts "For example: 'John Smith, November'".center(60)
   puts "To finish, input no name.".center(60)
-  name = gets.chomp.capitalize
+
+  entry = gets.split
+  cohort = entry.pop.capitalize
+  name = entry.map(&:capitalize).join(" ")
 
   while !name.empty? do
     puts "Hobby?".center(60)
@@ -30,7 +34,7 @@ def input_students
     birthplace = gets.chomp.capitalize
     puts "Height?".center(60)
     height = gets.chomp.capitalize
-    students << {name: name, hobby: hobby, birthplace: birthplace, height: height, cohort: :November}
+    students << {name: name, hobby: hobby, birthplace: birthplace, height: height, cohort: cohort}
     puts "Now we have #{students.count} students. Please input another.".center(60)
     name = gets.chomp.capitalize
   end
