@@ -1,15 +1,22 @@
 
 def print_header
-  puts "The students of Villains Academy".center(60)
+  puts "The Students of Villains Academy".center(60)
   puts "-------------".center(60)
 end
 
 def print(students)
+  if @n == 0
+     return
+  end
+
   students.sort_by {|x| x[:cohort]}.select {|x| puts "#{x[:cohort]} - #{x[:name]}"}
 end
 
 def print_footer(names)
+  if @n == 0
+     return
   puts "Overall, we have #{@n} great #{plural @n}".center(60)
+  end
 end
 
 def input_students
@@ -52,7 +59,7 @@ def plural(n)
  n == 1? "student" : "students"
 end
 
-students = input_students
 print_header
+students = input_students
 print(students)
 print_footer(students)
