@@ -28,11 +28,11 @@ def input_students
   loop do
     cohort = gets.chomp.capitalize
     if cohort.empty?
-      cohort = :November
+      @cohort = :November
       break
     end
     if month.include?(cohort)
-      cohort = cohort.to_sym
+      @cohort = cohort.to_sym
       break
     end
     puts "Invalid month. Try again.".center(60)
@@ -45,7 +45,7 @@ def input_students
     birthplace = gets.chomp.capitalize
     puts "Height?".center(60)
     height = gets.chomp.capitalize
-    students << {name: name, hobby: hobby, birthplace: birthplace, height: height, cohort: cohort}
+    students << {name: name, hobby: hobby, birthplace: birthplace, height: height, cohort: @cohort}
     puts "Now we have #{students.count} students. Please input another.".center(60)
     name = gets.chomp.capitalize
   end
