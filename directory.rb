@@ -1,4 +1,3 @@
-
 def print_header
   puts "The students of Villains Academy".center(60)
   puts "-------------".center(60)
@@ -7,8 +6,7 @@ end
 def print(students)
   i = 0
   while i < students.length
-    puts "#{i + 1}. #{students[i][:name]}".center(60)
-    puts "Born: #{students[i][:birthplace]}, Height: #{students[i][:height]}, Hobby: #{students[i][:hobby]} -  #{students[i][:cohort]}Cohort".center(60)
+    puts "#{i + 1}. #{students[i][:name]} Born: #{students[i][:birthplace]}, Height: #{students[i][:height]}, Hobby: #{students[i][:hobby]} #{students[i][:cohort]} cohort".center(60)
     i += 1
   end
 end
@@ -19,13 +17,12 @@ end
 
 def input_students
   students = []
-  puts "Please enter the name of the student and cohort month.".center(60)
-  puts "For example: 'John Smith, November'".center(60)
+  puts "Please enter the name of the student".center(60)
   puts "To finish, input no name.".center(60)
-
-  entry = gets.split
-  cohort = entry.pop.capitalize
-  name = entry.map(&:capitalize).join(" ")
+  name = gets.capitalize
+  puts "Month of cohort. Default is November if blank".center(60)
+  cohort = gets.chomp.capitalize.to_sym
+  cohort.empty? ? cohort = :November : cohort
 
   while !name.empty? do
     puts "Hobby?".center(60)
