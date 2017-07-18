@@ -1,5 +1,4 @@
 
-
 def print_header
   puts "The students of Villains Academy".center(60)
   puts "-------------".center(60)
@@ -10,7 +9,7 @@ def print(students)
 end
 
 def print_footer(names)
-  puts "Overall, we have #{names.count} great students".center(60)
+  puts "Overall, we have #{@n} great #{plural @n}".center(60)
 end
 
 def input_students
@@ -42,10 +41,15 @@ def input_students
     puts "Height?".center(60)
     height = gets.chomp.capitalize
     students << {name: name, hobby: hobby, birthplace: birthplace, height: height, cohort: @cohort}
-    puts "Now we have #{students.count} students. Please input another.".center(60)
+    @n = students.count
+    puts "Now we have #{@n} #{plural @n}. Please input another.".center(60)
     name = gets.chomp.capitalize
   end
   students
+end
+
+def plural(n)
+ n == 1? "student" : "students"
 end
 
 students = input_students
