@@ -29,7 +29,7 @@ def print_menu
   puts "2. Show the students"
   puts "3. Save the list to students.csv"
   puts "4. Load the list from students.csv"
-  puts "9. Exit" # 9 because we'll be adding more items
+  puts "9. Exit"
 end
 
 def show_students
@@ -55,26 +55,26 @@ def input_students
   month = %w(January February March April May June July August September October November December)
   puts "Please enter the name of the student".center(60)
   puts "To finish, input no name.".center(60)
-  name = STDIN.gets.gsub(/\n/,"").capitalize
+  @name = STDIN.gets.gsub(/\n/,"").capitalize
 
-  while !name.empty? do
+  while !@name.empty? do
   puts "Month of cohort. Default is November if blank".center(60)
   loop do
-    cohort = STDIN.gets.gsub(/\n/,"").capitalize
-    if cohort.empty?
+    @cohort = STDIN.gets.gsub(/\n/,"").capitalize
+    if @cohort.empty?
       @cohort = :November
       break
     end
-    if month.include?(cohort)
-      @cohort = cohort.to_sym
+    if month.include?(@cohort)
+      @cohort = @cohort.to_sym
       break
     end
     puts "Invalid month. Try again.".center(60)
   end
-    @students << {name: name, cohort: @cohort}
+    add_to_array
     @n = @students.count
     puts "Now we have #{@n} #{plural}. Please input another.".center(60)
-    name = STDIN.gets.gsub(/\n/,"").capitalize
+    @name = STDIN.gets.gsub(/\n/,"").capitalize
   end
 end
 
@@ -92,8 +92,8 @@ end
 def load_students (filename = students.csv)
   file = File.open(filename, "r")
   file.readlines.each do |line|
-  name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+  @name, @cohort = line.chomp.split(',')
+  add_to_array
   end
   file.close
 end
@@ -112,6 +112,10 @@ end
 
 def plural
  @n == 1? "student" : "students"
+end
+
+def add_to_array
+@students << {name: @name, cohort: @cohort}
 end
 
 interactive_menu
