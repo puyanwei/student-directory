@@ -13,6 +13,8 @@ def process(selection)
       input_students
     when "2"
       show_students
+    when "3"
+      save_students
     when "9"
       exit
     else
@@ -23,6 +25,7 @@ end
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
+  puts "3. Save the list to students.csv"
   puts "9. Exit" # 9 because we'll be adding more items
 end
 
@@ -38,7 +41,7 @@ def print_header
 end
 
 def print_student_list
-  @students.sort_by {|x| x[:cohort]}.select {|x| puts "#{x[:cohort]} - #{x[:name]}"}
+  @students.sort_by {|x| x[:cohort]}.select {|x| puts "#{x[:name]} - #{x[:cohort]}"}
 end
 
 def print_footer
@@ -65,17 +68,22 @@ def input_students
     end
     puts "Invalid month. Try again.".center(60)
   end
-    puts "Hobby?".center(60)
-    hobby = gets.gsub(/\n/,"").capitalize
-    puts "Birthplace?".center(60)
-    birthplace = gets.gsub(/\n/,"").capitalize
-    puts "Height?".center(60)
-    height = gets.gsub(/\n/,"").capitalize
-    @students << {name: name, hobby: hobby, birthplace: birthplace, height: height, cohort: @cohort}
+    @students << {name: name, cohort: @cohort}
     @n = @students.count
     puts "Now we have #{@n} #{plural}. Please input another.".center(60)
     name = gets.gsub(/\n/,"").capitalize
   end
+end
+
+def save_students
+file = File.open("students.csv", "w")
+@students.each do |student|
+  student_data = [student[:name], student[:cohort]]
+  csv_line = student_data.join(",")
+  file.puts csv_line
+  end
+  file.close
+  puts "File is saved."
 end
 
 def plural
