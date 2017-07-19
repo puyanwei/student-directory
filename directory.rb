@@ -3,7 +3,7 @@
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
@@ -15,6 +15,8 @@ def process(selection)
       show_students
     when "3"
       save_students
+    when "4"
+      load_students
     when "9"
       exit
     else
@@ -26,6 +28,7 @@ def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
   puts "3. Save the list to students.csv"
+  puts "4. Load the list from students.csv"
   puts "9. Exit" # 9 because we'll be adding more items
 end
 
@@ -52,12 +55,12 @@ def input_students
   month = %w(January February March April May June July August September October November December)
   puts "Please enter the name of the student".center(60)
   puts "To finish, input no name.".center(60)
-  name = gets.gsub(/\n/,"").capitalize
+  name = STDIN.gets.gsub(/\n/,"").capitalize
 
   while !name.empty? do
   puts "Month of cohort. Default is November if blank".center(60)
   loop do
-    cohort = gets.gsub(/\n/,"").capitalize
+    cohort = STDIN.gets.gsub(/\n/,"").capitalize
     if cohort.empty?
       @cohort = :November
       break
@@ -71,7 +74,7 @@ def input_students
     @students << {name: name, cohort: @cohort}
     @n = @students.count
     puts "Now we have #{@n} #{plural}. Please input another.".center(60)
-    name = gets.gsub(/\n/,"").capitalize
+    name = STDIN.gets.gsub(/\n/,"").capitalize
   end
 end
 
@@ -84,6 +87,27 @@ file = File.open("students.csv", "w")
   end
   file.close
   puts "File is saved."
+end
+
+def load_students (filename = students.csv)
+  file = File.open(filename, "r")
+  file.readlines.each do |line|
+  name, cohort = line.chomp.split(',')
+    @students << {name: name, cohort: cohort.to_sym}
+  end
+  file.close
+end
+
+def try_load_students
+  filename = ARGV.first
+  return if filename.nil?
+  if File.exists?(filename)
+    load_students(filename)
+     puts "Loaded #{@students.count} from #{filename}"
+  else
+    puts "Sorry, #{filename} doesn't exist."
+    exit
+  end
 end
 
 def plural
