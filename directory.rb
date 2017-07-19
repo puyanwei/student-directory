@@ -81,4 +81,10 @@ def plural(n)
 end
 
 print_header
+<<<<<<< HEAD
 interactive_menu
+=======
+students = input_students
+print(students)
+print_footer(students)
+>>>>>>> 8abdb26ffb846586e4970322362f35fe8279e6ca
