@@ -1,4 +1,26 @@
 
+def interactive_menu
+  students = []
+  loop do
+    puts "1. Input the students"
+    puts "2. Show the students"
+    puts "9. Exit"
+    selection = gets.chomp
+    case selection
+    when "1"
+      students = input_students
+    when "2"
+      print_header
+      print(students)
+      print_footer(students)
+    when "9"
+      exit
+    else
+      puts "Invalid Choice. Try again."
+    end
+  end
+end
+
 def print_header
   puts "The Students of Villains Academy".center(60)
   puts "-------------".center(60)
@@ -21,7 +43,6 @@ end
 
 def input_students
   month = %w(January February March April May June July August September October November December)
-  students = []
   puts "Please enter the name of the student".center(60)
   puts "To finish, input no name.".center(60)
   name = gets.gsub(/\n/,"").capitalize
@@ -60,6 +81,4 @@ def plural(n)
 end
 
 print_header
-students = input_students
-print(students)
-print_footer(students)
+interactive_menu
