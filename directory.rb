@@ -10,14 +10,19 @@ end
 def process(selection)
   case selection
     when "1"
+      puts "Input students selected".center(60)
       input_students
     when "2"
+      puts "Show students selected"
       show_students
     when "3"
+      puts "Save students selected".center(60)
       save_students
     when "4"
+      puts "Load students selected".center(60)
       load_students
     when "9"
+      puts "Exit selected".center(60)
       exit
     else
       puts "Invalid Selection. Try again."
@@ -27,8 +32,8 @@ end
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "3. Save the list"
+  puts "4. Load a file"
   puts "9. Exit"
 end
 
@@ -59,43 +64,46 @@ def input_students
 
   while !@name.empty? do
   puts "Month of cohort. Default is November if blank".center(60)
-  loop do
-    @cohort = STDIN.gets.gsub(/\n/,"").capitalize
-    if @cohort.empty?
-      @cohort = :November
-      break
+    loop do
+      @cohort = STDIN.gets.gsub(/\n/,"").capitalize
+      if @cohort.empty?
+        @cohort = :November
+        break
+      end
+      if month.include?(@cohort)
+        @cohort = @cohort.to_sym
+        break
+      end
+      puts "Invalid month. Try again.".center(60)
     end
-    if month.include?(@cohort)
-      @cohort = @cohort.to_sym
-      break
-    end
-    puts "Invalid month. Try again.".center(60)
-  end
     add_to_array
-    @n = @students.count
-    puts "Now we have #{@n} #{plural}. Please input another.".center(60)
+    puts "Now we have #{@students.count} #{plural}. Please input  another.".center(60)
     @name = STDIN.gets.gsub(/\n/,"").capitalize
   end
 end
 
 def save_students
-file = File.open("students.csv", "w")
-@students.each do |student|
-  student_data = [student[:name], student[:cohort]]
-  csv_line = student_data.join(",")
-  file.puts csv_line
+  puts "Please input the name of your file to save"
+  input = gets.chomp
+  file = File.open("#{input}.csv", "w") do |file|
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort]]
+      csv_line = student_data.join(",")
+      file.puts csv_line
+    end
   end
-  file.close
-  puts "File is saved.".center(60)
+  puts "File #{input}.csv is saved.".center(60)
 end
 
-def load_students (filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-  @name, @cohort = line.chomp.split(',')
-  add_to_array
+def load_students
+  puts "Please input the exact name of the file".center(60)
+  input = gets.chomp
+  file = File.open(input, "r") do |file|
+    file.readlines.each do |line|
+      @name, @cohort = line.chomp.split(',')
+    end
   end
-  file.close
+  add_to_array
   puts "students.csv loaded.".center(60)
 end
 
@@ -105,7 +113,6 @@ def try_load_students
     else
       filename = ARGV.first
     end
-    load_students
     puts "Loaded #{@students.count} from #{filename}".center(60)
 end
 
