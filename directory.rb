@@ -86,7 +86,7 @@ file = File.open("students.csv", "w")
   file.puts csv_line
   end
   file.close
-  puts "File is saved."
+  puts "File is saved.".center(60)
 end
 
 def load_students (filename = "students.csv")
@@ -96,18 +96,17 @@ def load_students (filename = "students.csv")
   add_to_array
   end
   file.close
+  puts "students.csv loaded.".center(60)
 end
 
 def try_load_students
-  filename = ARGV.first
-  return if filename.nil?
-  if File.exists?(filename)
-    load_students(filename)
-     puts "Loaded #{@students.count} from #{filename}"
-  else
-    puts "Sorry, #{filename} doesn't exist."
-    exit
-  end
+  if ARGV.empty?
+      filename = "students.csv"
+    else
+      filename = ARGV.first
+    end
+    load_students
+    puts "Loaded #{@students.count} from #{filename}".center(60)
 end
 
 def plural
