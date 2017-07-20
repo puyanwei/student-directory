@@ -89,7 +89,7 @@ file = File.open("students.csv", "w")
   puts "File is saved."
 end
 
-def load_students (filename = students.csv)
+def load_students (filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
   @name, @cohort = line.chomp.split(',')
@@ -118,4 +118,5 @@ def add_to_array
 @students << {name: @name, cohort: @cohort}
 end
 
+try_load_students
 interactive_menu
