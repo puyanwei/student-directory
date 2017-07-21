@@ -1,3 +1,4 @@
+require 'csv'
 @students = []
 
 def interactive_menu
@@ -76,7 +77,8 @@ def input_students
       end
       puts "Invalid month. Try again.".center(60)
     end
-    add_to_array
+    p @name
+    add_to_array(@name, @cohort)
     puts "Now we have #{@students.count} #{plural}. Please input  another.".center(60)
     @name = STDIN.gets.gsub(/\n/,"").capitalize
   end
@@ -85,25 +87,21 @@ end
 def save_students
   puts "Please input the name of your file to save"
   input = gets.chomp
-  file = File.open("#{input}.csv", "w") do |file|
+  file = CSV.open("#{input}.csv", "w") do |file|
     @students.each do |student|
-      student_data = [student[:name], student[:cohort]]
-      csv_line = student_data.join(",")
-      file.puts csv_line
+      file << [student[:name], student[:cohort]]
     end
   end
   puts "File #{input}.csv is saved.".center(60)
 end
 
 def load_students
-  puts "Please input the exact name of the file".center(60)
-  input = gets.chomp
-  file = File.open(input, "r") do |file|
-    file.readlines.each do |line|
-      @name, @cohort = line.chomp.split(',')
-    end
+puts "Please input the exact name of the file".center(60)
+  file = CSV.read("#{gets.chomp}")
+  file.each do |row|
+    name, cohort = row[0], row[1]
+    add_to_array(name, cohort)
   end
-  add_to_array
   puts "students.csv loaded.".center(60)
 end
 
@@ -112,16 +110,16 @@ def try_load_students
       filename = "students.csv"
     else
       filename = ARGV.first
-    end
-    puts "Loaded #{@students.count} from #{filename}".center(60)
+  end
+  puts "Loaded #{@students.count} from #{filename}".center(60)
 end
 
 def plural
  @n == 1? "student" : "students"
 end
 
-def add_to_array
-@students << {name: @name, cohort: @cohort}
+def add_to_array(name, cohort)
+@students << {name: name, cohort: cohort}
 end
 
 try_load_students
