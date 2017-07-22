@@ -96,13 +96,18 @@ def save_students
 end
 
 def load_students
-puts "Please input the exact name of the file".center(60)
-  file = CSV.read("#{gets.chomp}")
-  file.each do |row|
-    name, cohort = row[0], row[1]
-    add_to_array(name, cohort)
+  puts "Please input the exact name of the file".center(60)
+  input = gets.chomp
+  if File.exist?(input)
+    file = CSV.open(input)
+    puts "#{input} loaded.".center(60)
+    file.each do |row|
+      name, cohort = row[0], row[1]
+      add_to_array(name, cohort)
+    end
+    return
   end
-  puts "students.csv loaded.".center(60)
+  puts "File does not exist.".center(60)
 end
 
 def try_load_students
